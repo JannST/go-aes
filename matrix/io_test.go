@@ -8,13 +8,13 @@ import (
 )
 
 func TestMatrix_Read(t *testing.T) {
-	result := [][]byte{{'1', '2', '3', '4'}, {'1', '2', '3', '4'}, {'1', '2', '3', '4'}, {'1', '2', '3', '4'}}
+	result := []byte("1111222233334444")
 	reader := strings.NewReader("1111222233334444")
 
 	mat := NewMatrix(4, 4)
 	err := mat.ReadFrom(reader)
 	assert.Equal(t, nil, err)
-	assert.Equal(t, mat.data, result)
+	assert.Equal(t, result, mat.data)
 
 	reader = strings.NewReader("")
 	mat = NewMatrix(4, 4)
@@ -26,7 +26,7 @@ func TestMatrix_WriteTo(t *testing.T) {
 	var writer bytes.Buffer
 	result := "1111222233334444"
 	mat := NewMatrix(4, 4)
-	mat.data = [][]byte{{'1', '2', '3', '4'}, {'1', '2', '3', '4'}, {'1', '2', '3', '4'}, {'1', '2', '3', '4'}}
+	mat.data = []byte("1111222233334444")
 	mat.WriteTo(&writer)
 	assert.Equal(t, result, writer.String())
 }

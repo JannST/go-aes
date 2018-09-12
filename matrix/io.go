@@ -5,7 +5,7 @@ import (
 	"io"
 )
 
-func (m matrix) ReadFrom(reader io.Reader) error {
+func (m *matrix) ReadFrom(reader io.Reader) error {
 	size := m.GetSize()
 	if size == 0 {
 		return errors.New("size of matrix is 0")
@@ -13,6 +13,9 @@ func (m matrix) ReadFrom(reader io.Reader) error {
 
 	p := make([]byte, size)
 	n, err := reader.Read(p)
+	if err != nil {
+		return err
+	}
 
 	if n == 0 {
 		return errors.New("null bytes read")
@@ -20,7 +23,6 @@ func (m matrix) ReadFrom(reader io.Reader) error {
 
 	m.numberOfBytesPadded = size - n
 	m.setData(p)
-
 	return err
 }
 

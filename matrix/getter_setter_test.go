@@ -7,18 +7,27 @@ import (
 
 func TestMatrix_setData(t *testing.T) {
 	testBytes := []byte("abcdefghi")
-	resultData := [][]byte{{'a', 'd', 'g'}, {'b', 'e', 'h'}, {'c', 'f', 'i'}}
-
+	resultData := []byte("abcdefghi")
 	mat := NewMatrix(3, 3)
 	mat.setData(testBytes)
-	assert.Equal(t, mat.data, resultData)
+	assert.Equal(t, resultData, mat.data)
+
+	defer func() {
+		if r := recover(); r == nil {
+			t.Errorf("The code did not panic")
+		}
+	}()
+
+	testBytes = []byte("abcdefgh")
+	mat = NewMatrix(3, 3)
+	mat.setData(testBytes)
 }
 
 func TestMatrix_GetData(t *testing.T) {
 	mat := NewMatrix(3, 3)
 
 	assert.Equal(t, make([]byte, 3*3), mat.getData())
-	mat.data = [][]byte{{'a', 'd', 'g'}, {'b', 'e', 'h'}, {'c', 'f', 'i'}}
+	mat.data = []byte("abcdefghi")
 
 	result := []byte("abcdefghi")
 	output := mat.getData()
