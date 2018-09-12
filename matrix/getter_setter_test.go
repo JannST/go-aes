@@ -1,7 +1,6 @@
 package matrix
 
 import (
-	"fmt"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -17,6 +16,8 @@ func TestMatrix_setData(t *testing.T) {
 
 func TestMatrix_GetData(t *testing.T) {
 	mat := NewMatrix(3, 3)
+
+	assert.Equal(t, make([]byte, 3*3), mat.getData())
 	mat.data = [][]byte{{'a', 'd', 'g'}, {'b', 'e', 'h'}, {'c', 'f', 'i'}}
 
 	result := []byte("abcdefghi")
@@ -29,9 +30,8 @@ func TestMatrix_SetAndGet(t *testing.T) {
 
 	mat := NewMatrix(3, 4)
 	mat.setData(testBytes)
-	fmt.Println(mat.data)
 
 	output := mat.getData()
 
-	assert.Equal(t, testBytes, output)
+	assert.Equal(t, []byte("123456789abc"), output)
 }
