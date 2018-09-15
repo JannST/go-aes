@@ -4,7 +4,7 @@ func (m *matrix) setData(buffer []byte) {
 	if len(buffer) != m.GetSize() {
 		panic("numberOfColumns of data is not equal to size")
 	}
-	m.data = buffer
+	copy(m.data, buffer)
 }
 
 func (m matrix) getData() []byte {
