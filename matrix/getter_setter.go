@@ -2,7 +2,7 @@ package matrix
 
 func (m *matrix) setData(buffer []byte) {
 	if len(buffer) != m.GetSize() {
-		panic("length of data is not equal to size")
+		panic("numberOfColumns of data is not equal to size")
 	}
 	m.data = buffer
 }
