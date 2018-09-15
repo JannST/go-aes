@@ -1,4 +1,4 @@
-package matrix
+package matr
 
 import (
 	"github.com/pkg/errors"
@@ -6,9 +6,9 @@ import (
 )
 
 func (m *matrix) ReadFrom(reader io.Reader) error {
-	size := m.GetSize()
+	size := m.Size()
 	if size == 0 {
-		return errors.New("size of matrix is 0")
+		return errors.New("size of matr is 0")
 	}
 
 	p := make([]byte, size)

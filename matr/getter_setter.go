@@ -1,8 +1,8 @@
-package matrix
+package matr
 
 func (m *matrix) setData(buffer []byte) {
-	if len(buffer) != m.GetSize() {
-		panic("numberOfColumns of data is not equal to size")
+	if len(buffer) != m.Size() {
+		panic("length of data is not equal to size")
 	}
 	copy(m.data, buffer)
 }

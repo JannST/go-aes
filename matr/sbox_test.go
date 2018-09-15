@@ -1,4 +1,4 @@
-package matrix
+package matr
 
 import (
 	"github.com/stretchr/testify/assert"
@@ -14,7 +14,7 @@ func TestSBox(t *testing.T) {
 }
 
 func TestSBoxMatrix(t *testing.T) {
-	mat := NewMatrix(4, 6)
+	mat := newMatrix(4, 6)
 	result := []byte("Mei ist das kalt doa rin")
 	mat.setData(result)
 	mat.SubColumn(0)

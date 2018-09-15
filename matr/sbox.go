@@ -1,4 +1,4 @@
-package matrix
+package matr
 
 var sBox = [256]byte{
 	// 0     1     2     3     4     5     6     7     8     9     A     B     C     D     E     F
@@ -39,13 +39,13 @@ var rSBox = [256]byte{
 	0x17, 0x2b, 0x04, 0x7e, 0xba, 0x77, 0xd6, 0x26, 0xe1, 0x69, 0x14, 0x63, 0x55, 0x21, 0x0c, 0x7d} // F
 
 func (m *matrix) SubColumn(index int) {
-	for i := 0; i < m.numberOfRows; i++ {
-		m.data[index*m.numberOfRows+i] = sBox[m.data[index*m.numberOfRows+i]]
+	for i := 0; i < m.height; i++ {
+		m.data[index*m.height+i] = sBox[m.data[index*m.height+i]]
 	}
 }
 
 func (m *matrix) InvSubColumn(index int) {
-	for i := 0; i < m.numberOfRows; i++ {
-		m.data[index*m.numberOfRows+i] = rSBox[m.data[index*m.numberOfRows+i]]
+	for i := 0; i < m.height; i++ {
+		m.data[index*m.height+i] = rSBox[m.data[index*m.height+i]]
 	}
 }
