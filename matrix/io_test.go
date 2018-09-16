@@ -1,4 +1,4 @@
-package matr
+package matrix
 
 import (
 	"bytes"

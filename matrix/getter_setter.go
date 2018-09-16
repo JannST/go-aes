@@ -1,12 +1,12 @@
-package matr
+package matrix
 
-func (m *matrix) setData(buffer []byte) {
+func (m *Matrix) setData(buffer []byte) {
 	if len(buffer) != m.Size() {
 		panic("length of data is not equal to size")
 	}
 	copy(m.data, buffer)
 }
 
-func (m matrix) getData() []byte {
+func (m Matrix) Data() []byte {
 	return m.data
 }

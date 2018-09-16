@@ -1,14 +1,14 @@
-package matr
+package matrix
 
 import (
 	"github.com/pkg/errors"
 	"io"
 )
 
-func (m *matrix) ReadFrom(reader io.Reader) error {
+func (m *Matrix) ReadFrom(reader io.Reader) error {
 	size := m.Size()
 	if size == 0 {
-		return errors.New("size of matr is 0")
+		return errors.New("size of matrix is 0")
 	}
 
 	p := make([]byte, size)
@@ -26,7 +26,7 @@ func (m *matrix) ReadFrom(reader io.Reader) error {
 	return err
 }
 
-func (m matrix) WriteTo(writer io.Writer) error {
-	_, err := writer.Write(m.getData())
+func (m Matrix) WriteTo(writer io.Writer) error {
+	_, err := writer.Write(m.Data())
 	return err
 }

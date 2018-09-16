@@ -1,4 +1,4 @@
-package algorithm
+package basic
 
 import (
 	"github.com/stretchr/testify/assert"
@@ -15,10 +15,10 @@ func TestSBox(t *testing.T) {
 
 func TestSBoxMatrix(t *testing.T) {
 	result := []byte("Mei ist das kalt doa rin")
-	SubWord(result)
+	Subst(result)
 	assert.NotEqual(t, []byte("Mei ist das kalt doa rin"), result)
-	SubWord(result)
-	InvSubWord(result)
-	InvSubWord(result)
+	Subst(result)
+	InvSubst(result)
+	InvSubst(result)
 	assert.Equal(t, []byte("Mei ist das kalt doa rin"), result)
 }

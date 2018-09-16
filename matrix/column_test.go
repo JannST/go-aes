@@ -1,4 +1,4 @@
-package matr
+package matrix
 
 import (
 	"github.com/stretchr/testify/assert"

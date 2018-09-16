@@ -1,4 +1,4 @@
-package algorithm
+package basic
 
 import (
 	"github.com/stretchr/testify/assert"
