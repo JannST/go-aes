@@ -1,4 +1,4 @@
-package matr
+package algorithm
 
 var sBox = [256]byte{
 	// 0     1     2     3     4     5     6     7     8     9     A     B     C     D     E     F
@@ -38,14 +38,14 @@ var rSBox = [256]byte{
 	0xa0, 0xe0, 0x3b, 0x4d, 0xae, 0x2a, 0xf5, 0xb0, 0xc8, 0xeb, 0xbb, 0x3c, 0x83, 0x53, 0x99, 0x61, // E
 	0x17, 0x2b, 0x04, 0x7e, 0xba, 0x77, 0xd6, 0x26, 0xe1, 0x69, 0x14, 0x63, 0x55, 0x21, 0x0c, 0x7d} // F
 
-func (m *matrix) SubColumn(index int) {
-	for i := 0; i < m.height; i++ {
-		m.data[index*m.height+i] = sBox[m.data[index*m.height+i]]
+func SubWord(word []byte) {
+	for i := 0; i < len(word); i++ {
+		word[i] = sBox[word[i]]
 	}
 }
 
-func (m *matrix) InvSubColumn(index int) {
-	for i := 0; i < m.height; i++ {
-		m.data[index*m.height+i] = rSBox[m.data[index*m.height+i]]
+func InvSubWord(word []byte) {
+	for i := 0; i < len(word); i++ {
+		word[i] = rSBox[word[i]]
 	}
 }

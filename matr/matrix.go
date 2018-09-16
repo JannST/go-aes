@@ -1,19 +1,16 @@
 package matr
 
+import "io"
+
 type Matrix interface {
 	Size() int
 	Height() int
 	Length() int
 	Data() []byte
 	Print()
-	RotateHorizontal(row int, times int)
-	RotateVertical(column int, times int)
-	SubColumn(index int)
-	InvSubColumn(index int)
-	XorColumnRcon(index int, rcon int)
-	XorWithColumn(index int, data []byte)
 	Column(index int) []byte
 	SetColumn(index int, data []byte)
+	ReadFrom(reader io.Reader) error
 }
 
 type matrix struct {
