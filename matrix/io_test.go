@@ -30,3 +30,16 @@ func TestMatrix_WriteTo(t *testing.T) {
 	mat.WriteTo(&writer)
 	assert.Equal(t, result, writer.String())
 }
+
+func TestMatrix_WriteRead(t *testing.T) {
+	inp := []byte("1111222233334")
+	result := []byte("1111222233334\x00\x00\x00")
+	reader := bytes.NewReader(inp)
+
+	mat := newMatrix(4, 4)
+	mat.ReadFrom(reader)
+
+	var writer bytes.Buffer
+	mat.WriteTo(&writer)
+	assert.Equal(t, result, writer.Bytes())
+}

@@ -3,10 +3,39 @@ package matrix
 import (
 	"bytes"
 	"encoding/hex"
-	"fmt"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
+
+func TestMatrix_RotWord(t *testing.T) {
+	mat := newMatrix(4, 4)
+	mat.setData([]byte("1234abcd5678efgh"))
+	mat.RotWord(0, 1)
+	mat.RotWord(3, -2)
+	mat.RotWord(1, 4)
+	mat.RotWord(2, -1)
+
+	result := []byte("4123abcd6785ghef")
+	assert.Equal(t, result, mat.data)
+}
+
+func TestRotWord(t *testing.T) {
+	test := []byte("12345")
+	RotBytes(test, -1)
+	assert.Equal(t, []byte("23451"), test)
+
+	test = []byte("12345")
+	RotBytes(test, 5)
+	assert.Equal(t, []byte("12345"), test)
+
+	test = []byte("12345")
+	RotBytes(test, 2)
+	assert.Equal(t, []byte("45123"), test)
+
+	test = []byte("12345")
+	RotBytes(test, 4)
+	assert.Equal(t, []byte("23451"), test)
+}
 
 func TestExpand128BitKey(t *testing.T) {
 	result := []string{
@@ -105,8 +134,6 @@ func TestExpand128BitKey(t *testing.T) {
 //TODO add real tests for 192 and 256 bit
 
 func TestExpand192BitKey(t *testing.T) {
-
-	fmt.Println("================================================================192")
 	mat := NewMatrix(4, 6)
 	key, _ := hex.DecodeString("ffffffffffffffffffffffffffffffffffffffffffffffff")
 	mat.ReadFrom(bytes.NewReader(key))
@@ -120,8 +147,6 @@ func TestExpand192BitKey(t *testing.T) {
 }
 
 func TestExpand256BitKey(t *testing.T) {
-
-	fmt.Println("================================================================256")
 	mat := NewMatrix(4, 8)
 	key, _ := hex.DecodeString("603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4")
 	mat.ReadFrom(bytes.NewReader(key))

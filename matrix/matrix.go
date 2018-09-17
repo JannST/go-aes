@@ -1,6 +1,6 @@
 package matrix
 
-type Matrix struct {
+type Matrix struct { //TODO change height to constant value
 	data                []byte
 	length              int
 	height              int

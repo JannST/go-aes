@@ -5,9 +5,15 @@ import (
 	"fmt"
 )
 
-func (m Matrix) Print() {
+func (m Matrix) Tos() string {
+	var ret string
 	for i := 0; i < m.length; i++ {
-		fmt.Print(hex.EncodeToString(m.Column(i)), " ")
+		ret += hex.EncodeToString(m.Column(i))
+		ret += " "
 	}
-	fmt.Print("\n")
+	return ret
+}
+
+func (m Matrix) Print() {
+	fmt.Println(m.Tos())
 }
