@@ -1,5 +1,7 @@
 package matrix
 
+import "encoding/hex"
+
 type Matrix struct { //TODO change height to constant value
 	data                []byte
 	length              int
@@ -37,4 +39,13 @@ func (m Matrix) Length() int {
 
 func (m Matrix) SameSize(other Matrix) bool {
 	return other.Length() == m.length && other.Height() == m.height
+}
+
+func (m Matrix) DebugString() string {
+	var ret string
+	for i := 0; i < m.length; i++ {
+		ret += hex.EncodeToString(m.Column(i))
+		ret += " "
+	}
+	return ret
 }

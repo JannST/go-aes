@@ -1,7 +1,6 @@
 package matrix
 
 import (
-	"fmt"
 	"go-aes/math"
 	s "go-aes/tables"
 )
@@ -11,36 +10,18 @@ func (m *Matrix) Decrypt(keys []Matrix, rounds int) {
 		panic("len(keys) != rounds+1")
 	}
 
-	fmt.Println("==========start keys===========")
-	for _, key := range keys {
-		key.Print()
-	}
-	fmt.Println("==========End keys===========")
-
-	fmt.Println("Initial State:", m.Tos())
-
 	m.AddRoundKey(keys[rounds])
-	fmt.Println("AddRoundKey", m.Tos())
 
 	for round := rounds - 1; round >= 1; round-- {
 		m.InvShiftRows()
-		fmt.Println(round, "ShiftRows", m.Tos())
 		m.InvSubBytes()
-		fmt.Println(round, "SubBytes", m.Tos())
 		m.AddRoundKey(keys[round])
-		fmt.Println(round, "Adding key", keys[round].Tos())
-		fmt.Println(round, "AddRoundKey", m.Tos())
 		m.InvMixColumns()
-		fmt.Println(round, "MixColumns", m.Tos())
 	}
 
 	m.InvShiftRows()
-	fmt.Println("ShiftRows", m.Tos())
 	m.InvSubBytes()
-	fmt.Println("SubBytes", m.Tos())
 	m.AddRoundKey(keys[0])
-	fmt.Println("AddRoundKey", m.Tos())
-
 }
 
 func (m *Matrix) InvSubBytes() {

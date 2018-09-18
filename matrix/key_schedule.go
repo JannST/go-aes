@@ -21,28 +21,18 @@ func (m *Matrix) ExpandKey(rounds int) []Matrix {
 		for j := 0; j < m.Length(); j++ {
 			if j == 0 {
 				copy(temp, result[i-1].Column(m.Length()-1))
-				//fmt.Println("copy", hex.EncodeToString(temp))
 				RotBytes(temp, -1)
-				//fmt.Println("Rot", hex.EncodeToString(temp))
 				tables.SubWord(temp)
-				//fmt.Println("Sub", hex.EncodeToString(temp))
 				temp[0] ^= tables.Rcon(i)
-				//fmt.Println("Rcon", hex.EncodeToString(temp))
 			} else {
 				copy(temp, result[i].Column(j-1))
 			}
 
 			if m.Length() > 6 && j%m.Length() == 4 {
 				tables.SubWord(temp)
-				//fmt.Println("Rot2", hex.EncodeToString(temp))
 			}
-			//fmt.Println("xor", hex.EncodeToString(temp), hex.EncodeToString(result[i-1].Column(j)), hex.EncodeToString(math.Xor(temp, result[i-1].Column(j))))
 			result[i].SetColumn(j, math.Xor(temp, result[i-1].Column(j)))
 		}
-		//fmt.Println("=================================================")
-		//for _, e := range result {
-		//	e.Print()
-		//}
 	}
 	return result
 }

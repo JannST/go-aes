@@ -6,7 +6,8 @@ import (
 	"testing"
 )
 
-func TestMatrix_Encrypt(t *testing.T) {
+func TestMatrix_Encrypt128(t *testing.T) {
+	result, _ := hex.DecodeString("3925841d02dc09fbdc118597196a0b32")
 	key := newMatrix(4, 4)
 	key.data, _ = hex.DecodeString("2b7e151628aed2a6abf7158809cf4f3c")
 	key_schedule := key.ExpandKey(10)
@@ -14,6 +15,31 @@ func TestMatrix_Encrypt(t *testing.T) {
 	mat := newMatrix(4, 4)
 	mat.data, _ = hex.DecodeString("3243f6a8885a308d313198a2e0370734")
 	mat.Encrypt(key_schedule, 10)
+	assert.Equal(t, result, mat.data)
+}
+
+func TestMatrix_Encrypt192(t *testing.T) {
+	result, _ := hex.DecodeString("3925841d02dc09fbdc118597196a0b32")
+	key := newMatrix(4, 4)
+	key.data, _ = hex.DecodeString("2b7e151628aed2a6abf7158809cf4f3c")
+	key_schedule := key.ExpandKey(10)
+
+	mat := newMatrix(4, 4)
+	mat.data, _ = hex.DecodeString("3243f6a8885a308d313198a2e0370734")
+	mat.Encrypt(key_schedule, 10)
+	assert.Equal(t, result, mat.data)
+}
+
+func TestMatrix_Encrypt256(t *testing.T) {
+	result, _ := hex.DecodeString("3925841d02dc09fbdc118597196a0b32")
+	key := newMatrix(4, 4)
+	key.data, _ = hex.DecodeString("2b7e151628aed2a6abf7158809cf4f3c")
+	key_schedule := key.ExpandKey(10)
+
+	mat := newMatrix(4, 4)
+	mat.data, _ = hex.DecodeString("3243f6a8885a308d313198a2e0370734")
+	mat.Encrypt(key_schedule, 10)
+	assert.Equal(t, result, mat.data)
 }
 
 func TestMatrix_MixColumns(t *testing.T) {
