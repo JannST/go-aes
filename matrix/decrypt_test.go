@@ -3,17 +3,41 @@ package matrix
 import (
 	"encoding/hex"
 	"github.com/stretchr/testify/assert"
+	"go-aes/key_schedule"
 	"testing"
 )
 
-func TestMatrix_Decrypt(t *testing.T) {
-	key := newMatrix(4, 4)
-	key.data, _ = hex.DecodeString("2b7e151628aed2a6abf7158809cf4f3c")
-	key_schedule := key.ExpandKey(10)
+func TestMatrix_Decrypt128(t *testing.T) {
+	result, _ := hex.DecodeString("3243f6a8885a308d313198a2e0370734")
+	key, _ := hex.DecodeString("2b7e151628aed2a6abf7158809cf4f3c")
+	keySchedule := key_schedule.ExpandKey(key, Nb, 4, 10)
 
 	mat := newMatrix(4, 4)
 	mat.data, _ = hex.DecodeString("3925841d02dc09fbdc118597196a0b32")
-	mat.Decrypt(key_schedule, 10)
+	mat.Decrypt(keySchedule, 10)
+	assert.Equal(t, result, mat.data)
+}
+
+func TestMatrix_Decrypt192(t *testing.T) {
+	result, _ := hex.DecodeString("00112233445566778899aabbccddeeff")
+	key, _ := hex.DecodeString("000102030405060708090a0b0c0d0e0f1011121314151617")
+	keySchedule := key_schedule.ExpandKey(key, Nb, 6, 12)
+
+	mat := newMatrix(4, 4)
+	mat.data, _ = hex.DecodeString("dda97ca4864cdfe06eaf70a0ec0d7191")
+	mat.Decrypt(keySchedule, 12)
+	assert.Equal(t, result, mat.data)
+}
+
+func TestMatrix_Decrypt256(t *testing.T) {
+	result, _ := hex.DecodeString("00112233445566778899aabbccddeeff")
+	key, _ := hex.DecodeString("000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f")
+	keySchedule := key_schedule.ExpandKey(key, Nb, 8, 14)
+
+	mat := newMatrix(4, 4)
+	mat.data, _ = hex.DecodeString("8ea2b7ca516745bfeafc49904b496089")
+	mat.Decrypt(keySchedule, 14)
+	assert.Equal(t, result, mat.data)
 }
 
 func TestMatrix_ShiftRows(t *testing.T) {

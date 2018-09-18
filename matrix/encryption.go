@@ -5,22 +5,23 @@ import (
 	s "go-aes/tables"
 )
 
-func (m *Matrix) Encrypt(keys []Matrix, rounds int) {
-	if len(keys) != rounds+1 {
-		panic("len(keys) != rounds+1")
+func (m *Matrix) Encrypt(keys []byte, rounds int) {
+	if len(keys)%m.Size() != 0 {
+		panic("m.size does not devide len(keys)")
 	}
 
-	m.AddRoundKey(keys[0])
+	m.AddRoundKey(keys[:m.Size()])
+
 	for round := 1; round < rounds; round++ {
 		m.SubBytes()
 		m.ShiftRows()
 		m.MixColumns()
-		m.AddRoundKey(keys[round])
+		m.AddRoundKey(keys[round*m.Size() : (round+1)*m.Size()])
 	}
 
 	m.SubBytes()
 	m.ShiftRows()
-	m.AddRoundKey(keys[rounds])
+	m.AddRoundKey(keys[rounds*m.Size() : (rounds+1)*m.Size()])
 }
 
 func (m *Matrix) SubBytes() {
@@ -33,8 +34,8 @@ func (m *Matrix) ShiftRows() {
 	copy(buf, m.data)
 
 	for row := 1; row < m.height; row++ {
-		for col := 0; col < m.length; col++ {
-			dst = math.Modulo(col-row, m.length)
+		for col := 0; col < m.nk; col++ {
+			dst = math.Modulo(col-row, m.nk)
 			m.data[dst*m.height+row] = buf[col*m.height+row]
 		}
 	}
@@ -54,12 +55,12 @@ func (m *Matrix) MixColumns() {
 	}
 }
 
-func (m *Matrix) AddRoundKey(key Matrix) {
-	if m.length != key.length || m.length != key.length {
-		panic("input matrix is not of same size")
+func (m *Matrix) AddRoundKey(key []byte) {
+	if m.Size() != len(key) {
+		panic("input is not of same size as matrix")
 	}
 
 	for i := 0; i < len(m.data); i++ {
-		m.data[i] ^= key.data[i]
+		m.data[i] ^= key[i]
 	}
 }

@@ -2,31 +2,25 @@ package matrix
 
 import "encoding/hex"
 
+const Nb = 4
+
 type Matrix struct { //TODO change height to constant value
 	data                []byte
-	length              int
+	nk                  int
 	height              int
 	numberOfBytesPadded int
 }
 
 func newMatrix(numberOfRows int, length int) Matrix {
 	var mat Matrix
-	mat.length = length
+	mat.nk = length
 	mat.height = numberOfRows
 	mat.data = make([]byte, numberOfRows*length)
 	return mat
 }
 
-func NewMatrix(height int, length int) Matrix {
-	var mat Matrix
-	mat.length = length
-	mat.height = height
-	mat.data = make([]byte, height*length)
-	return mat
-}
-
 func (m Matrix) Size() int {
-	return m.height * m.length
+	return m.height * m.nk
 }
 
 func (m Matrix) Height() int {
@@ -34,16 +28,16 @@ func (m Matrix) Height() int {
 }
 
 func (m Matrix) Length() int {
-	return m.length
+	return m.nk
 }
 
 func (m Matrix) SameSize(other Matrix) bool {
-	return other.Length() == m.length && other.Height() == m.height
+	return other.Length() == m.nk && other.Height() == m.height
 }
 
 func (m Matrix) DebugString() string {
 	var ret string
-	for i := 0; i < m.length; i++ {
+	for i := 0; i < m.nk; i++ {
 		ret += hex.EncodeToString(m.Column(i))
 		ret += " "
 	}

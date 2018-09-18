@@ -9,9 +9,10 @@ func Modulo(num int, base int) int {
 	return result
 }
 
+//Xors tow byte slices bitwise. Returns new slice and will not modify input
 func Xor(data1 []byte, data2 []byte) []byte {
 	if len(data1) != len(data2) {
-		panic("eeek! different size")
+		panic("different length of input")
 	}
 
 	result := make([]byte, len(data1))

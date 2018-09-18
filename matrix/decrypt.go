@@ -5,23 +5,23 @@ import (
 	s "go-aes/tables"
 )
 
-func (m *Matrix) Decrypt(keys []Matrix, rounds int) {
-	if len(keys) != rounds+1 {
-		panic("len(keys) != rounds+1")
+func (m *Matrix) Decrypt(keys []byte, rounds int) {
+	if len(keys)%m.Size() != 0 {
+		panic("m.size does not devide len(keys)")
 	}
 
-	m.AddRoundKey(keys[rounds])
+	m.AddRoundKey(keys[rounds*m.Size() : (rounds+1)*m.Size()])
 
 	for round := rounds - 1; round >= 1; round-- {
 		m.InvShiftRows()
 		m.InvSubBytes()
-		m.AddRoundKey(keys[round])
+		m.AddRoundKey(keys[round*m.Size() : (round+1)*m.Size()])
 		m.InvMixColumns()
 	}
 
 	m.InvShiftRows()
 	m.InvSubBytes()
-	m.AddRoundKey(keys[0])
+	m.AddRoundKey(keys[0:m.Size()])
 }
 
 func (m *Matrix) InvSubBytes() {
@@ -34,8 +34,8 @@ func (m *Matrix) InvShiftRows() {
 	copy(buf, m.data)
 
 	for row := 1; row < m.height; row++ {
-		for col := 0; col < m.length; col++ {
-			dst = math.Modulo(col+row, m.length)
+		for col := 0; col < m.nk; col++ {
+			dst = math.Modulo(col+row, m.nk)
 			m.data[dst*m.height+row] = buf[col*m.height+row]
 		}
 	}
