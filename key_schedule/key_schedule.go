@@ -35,16 +35,3 @@ func RotBytes(data []byte, steps int) {
 		data[math.Modulo(i+steps, len(data))] = buffer[i]
 	}
 }
-
-/*
-func (m *Matrix) RotWord(column int, times int) {
-	col := key_schedule[column*m.height : column*m.height+m.height]
-	buffer := make([]byte, m.height)
-	copy(buffer, col)
-
-	for i, element := range buffer {
-		col[math.Modulo(i+times, m.height)] = element
-	}
-}
-
-*/

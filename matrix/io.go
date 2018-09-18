@@ -6,12 +6,7 @@ import (
 )
 
 func (m *Matrix) ReadFrom(reader io.Reader) error {
-	size := m.Size()
-	if size == 0 {
-		return errors.New("size of matrix is 0")
-	}
-
-	p := make([]byte, size)
+	p := make([]byte, Size())
 	n, err := reader.Read(p)
 	if err != nil {
 		return err
@@ -21,12 +16,11 @@ func (m *Matrix) ReadFrom(reader io.Reader) error {
 		return errors.New("null bytes read")
 	}
 
-	m.numberOfBytesPadded = size - n
-	m.setData(p)
+	m.data = p
 	return err
 }
 
 func (m Matrix) WriteTo(writer io.Writer) error {
-	_, err := writer.Write(m.Data())
+	_, err := writer.Write(m.data)
 	return err
 }

@@ -1,45 +1,33 @@
 package matrix
 
-import "encoding/hex"
-
 const Nb = 4
 
-type Matrix struct { //TODO change height to constant value
-	data                []byte
-	nk                  int
-	height              int
-	numberOfBytesPadded int
+type Matrix struct {
+	data []byte
 }
 
-func newMatrix(numberOfRows int, length int) Matrix {
+func NewMatrix() Matrix {
 	var mat Matrix
-	mat.nk = length
-	mat.height = numberOfRows
-	mat.data = make([]byte, numberOfRows*length)
+	mat.data = make([]byte, Size())
 	return mat
 }
 
-func (m Matrix) Size() int {
-	return m.height * m.nk
+func Size() int {
+	return Nb * Nb
 }
 
-func (m Matrix) Height() int {
-	return m.height
-}
-
-func (m Matrix) Length() int {
-	return m.nk
-}
-
+/*
 func (m Matrix) SameSize(other Matrix) bool {
-	return other.Length() == m.nk && other.Height() == m.height
+	return other.Nk() == m.nk && other.Height() == m.height
 }
+
 
 func (m Matrix) DebugString() string {
 	var ret string
-	for i := 0; i < m.nk; i++ {
+	for i := 0; i < Nb; i++ {
 		ret += hex.EncodeToString(m.Column(i))
 		ret += " "
 	}
 	return ret
 }
+*/

@@ -6,20 +6,6 @@ import (
 	"testing"
 )
 
-/*
-func TestMatrix_RotWord(t *testing.T) {
-	mat := newMatrix(4, 4)
-	mat.setData([]byte("1234abcd5678efgh"))
-	mat.RotWord(0, 1)
-	mat.RotWord(3, -2)
-	mat.RotWord(1, 4)
-	mat.RotWord(2, -1)
-
-	result := []byte("4123abcd6785ghef")
-	assert.Equal(t, result, mat.data)
-}
-*/
-
 func TestRotWord(t *testing.T) {
 	test := []byte("12345")
 	RotBytes(test, -1)
