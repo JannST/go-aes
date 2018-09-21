@@ -1,19 +1,16 @@
 package matrix
 
 import (
-	"github.com/pkg/errors"
+	"fmt"
 	"io"
 )
 
 func (m *Matrix) ReadFrom(reader io.Reader) error {
 	p := make([]byte, Size())
 	n, err := reader.Read(p)
+	fmt.Println(n, err)
 	if err != nil {
 		return err
-	}
-
-	if n == 0 {
-		return errors.New("null bytes read")
 	}
 
 	m.data = p
