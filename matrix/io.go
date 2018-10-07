@@ -1,15 +1,15 @@
 package matrix
 
 import (
-	"fmt"
 	"io"
 )
 
 func (m *Matrix) ReadFrom(reader io.Reader) error {
 	p := make([]byte, Size())
 	n, err := reader.Read(p)
-	fmt.Println(n, err)
-	if err != nil {
+	if err == io.EOF && n == 0 {
+		return err
+	} else if err != nil && err != io.EOF {
 		return err
 	}
 

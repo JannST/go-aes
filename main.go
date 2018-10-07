@@ -1,6 +1,9 @@
 package main
 
 import (
+	"bytes"
+	"encoding/hex"
+	"errors"
 	"fmt"
 	"log"
 	"os"
@@ -10,23 +13,26 @@ import (
 
 func main() {
 	app := cli.NewApp()
+	app.Name = "Go AES"
+	app.Usage = "Application for encoding / decoding strings"
+	app.Description = "Encodes and decodes strings with the AES Alogrithm (ECB mode)"
 	app.Version = "1.0"
 	app.Author = "JanST"
 
 	app.Flags = []cli.Flag{
 		cli.BoolFlag{
-			Name:  "file",
-			Usage: "programm will resolve input to file path and process file",
+			Name:  "hex",
+			Usage: "Define input text as hex",
 		},
 		cli.IntFlag{
 			Name:  "klength",
-			Usage: "Sets the key length used to encrypt/decrypt data",
-			Value: 34,
+			Usage: "Set key length used to encrypt/decrypt data",
+			Value: 128,
 		},
-		cli.StringFlag{
-			Name:  "mode",
-			Usage: "Sets encryption mode (ECB or CBC)",
-			Value: "ECB",
+		cli.IntFlag{
+			Name:  "rounds",
+			Usage: "Set number of rounds for encryption",
+			Value: 10,
 		},
 	}
 
@@ -34,22 +40,68 @@ func main() {
 		{
 			Name:    "encrypt",
 			Aliases: []string{"enc"},
-			Usage:   "encrypts data",
+			Usage:   "encrypt <key> <text>",
 			Action: func(c *cli.Context) error {
-				fmt.Println(c.GlobalBool("file"))
-				fmt.Println(c.Args())
-				fmt.Println("added task: ", c.Args().First())
+				if len(c.Args()) < 2 {
+					return errors.New("Too few arguments")
+				}
+
+				key := []byte(c.Args()[0])
+				var text []byte = []byte(c.Args()[1])
+				if c.GlobalBool("hex") {
+					var err error
+					text, err = hex.DecodeString(c.Args()[1])
+					if err != nil {
+						return err
+					}
+				}
+
+				in := bytes.NewReader(text)
+				var out bytes.Buffer
+
+				defer func() {
+					if r := recover(); r != nil {
+						fmt.Println("Error:", r)
+					}
+				}()
+
+				Encrypt(in, &out, key, c.GlobalInt("klength"), c.GlobalInt("rounds"))
+				fmt.Println("Ciphertext:", out.String())
+				fmt.Println("Ciphertext (HEX):", hex.EncodeToString(out.Bytes()))
 				return nil
 			},
 		},
 		{
 			Name:    "decrypt",
 			Aliases: []string{"dec"},
-			Usage:   "decrypts data",
+			Usage:   "decrypt <key> <text>",
 			Action: func(c *cli.Context) error {
-				fmt.Println(c.GlobalBool("file"))
-				fmt.Println(c.Args())
-				fmt.Println("added task: ", c.Args().First())
+				if len(c.Args()) < 2 {
+					return errors.New("Too few arguments")
+				}
+
+				key := []byte(c.Args()[0])
+				var text []byte = []byte(c.Args()[1])
+				if c.GlobalBool("hex") {
+					var err error
+					text, err = hex.DecodeString(c.Args()[1])
+					if err != nil {
+						return err
+					}
+				}
+
+				in := bytes.NewReader(text)
+				var out bytes.Buffer
+
+				defer func() {
+					if r := recover(); r != nil {
+						fmt.Println("Error:", r)
+					}
+				}()
+
+				Decrypt(in, &out, key, c.GlobalInt("klength"), c.GlobalInt("rounds"))
+				fmt.Println("Plaintext:", out.String())
+				fmt.Println("Plaintext (HEX):", hex.EncodeToString(out.Bytes()))
 				return nil
 			},
 		},
