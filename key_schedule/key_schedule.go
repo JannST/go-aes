@@ -1,8 +1,8 @@
 package key_schedule
 
 import (
-	"go-aes/math"
-	t "go-aes/tables"
+	"github.com/JannST/go-aes/math"
+	t "github.com/JannST/go-aes/tables"
 )
 
 func ExpandKey(key []byte, nb int, nk int, rounds int) []byte {

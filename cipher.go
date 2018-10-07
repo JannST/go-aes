@@ -2,8 +2,8 @@ package main
 
 import (
 	"github.com/pkg/errors"
-	"go-aes/key_schedule"
-	"go-aes/matrix"
+	"github.com/JannST/go-aes/key_schedule"
+	"github.com/JannST/go-aes/matrix"
 	"io"
 )
 

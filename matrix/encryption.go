@@ -1,8 +1,8 @@
 package matrix
 
 import (
-	"go-aes/math"
-	s "go-aes/tables"
+	"github.com/JannST/go-aes/math"
+	s "github.com/JannST/go-aes/tables"
 )
 
 func (m *Matrix) Encrypt(keys []byte, rounds int) {

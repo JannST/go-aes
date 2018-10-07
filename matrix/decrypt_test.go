@@ -3,7 +3,7 @@ package matrix
 import (
 	"encoding/hex"
 	"github.com/stretchr/testify/assert"
-	"go-aes/key_schedule"
+	"github.com/JannST/go-aes/key_schedule"
 	"testing"
 )
 
