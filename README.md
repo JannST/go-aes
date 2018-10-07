@@ -1,5 +1,6 @@
 # go-aes
 This is my implementation of the Rijndael Algorithm (AES) in Go. It can encrypt and decrypt strings (yeah).
+
 It was implemented using this spec: https://nvlpubs.nist.gov/nistpubs/fips/nist.fips.197.pdf
 
 It uses github.com/urfave/cli as command line application framework.
